@@ -17,7 +17,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static String namespace = "org.zerock.mapper.BoardMapper";
 
 	@Override
-	public void creat(BoardVO vo) throws Exception {
+	public void create(BoardVO vo) throws Exception {
 		session.insert(namespace + ".create", vo);
 	}
 

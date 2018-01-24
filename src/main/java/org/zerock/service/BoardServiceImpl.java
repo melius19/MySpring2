@@ -16,7 +16,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void regist(BoardVO board) throws Exception {
-		dao.creat(board);
+		dao.create(board);
 	}
 
 	public BoardVO read(Integer bno) throws Exception {
