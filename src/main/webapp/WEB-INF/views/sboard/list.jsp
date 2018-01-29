@@ -39,7 +39,10 @@
 						<option value="tcw"
 							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
 							Title OR Content OR Writer</option>
-					</select>
+					</select> <input text="text" name="keyword" id="keywordInput"
+						value='${cri.keyword}'>
+					<button id='searchBtn'>Search</button>
+					<button id='newBtn'>New Board</button>
 				</div>
 			</div>
 			<div class="box">
@@ -60,7 +63,7 @@
 							<tr>
 								<td>${boardVO.bno}</td>
 								<td><a
-									href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page) }&bno=${boardVO.bno}'>
+									href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bno=${boardVO.bno}'>
 										${boardVO.title}</a></td>
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
@@ -77,22 +80,20 @@
 							<c:if test="${pageMaker.prev}">
 								<%-- <li><a href="listPage?page=${pageMaker.startPage-1}">&laquo;</a></li> --%>
 								<li><a
-									href="listPage${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
+									href="list${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
 							</c:if>
 
 							<c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage}" var="idx">
 								<li
 									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-									<%-- <a href="listPage?page=${idx}">${idx}</a> --%> <a
-									href="listPage${pageMaker.makeQuery(idx)}">${idx}</a>
+									<a href="list${pageMaker.makeSearch(idx)}">${idx}</a>
 								</li>
 							</c:forEach>
 
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-								<%-- <li><a href="listPage?page=${pageMaker.endPage+1}">&raquo;</a></li> --%>
 								<li><a
-									href="listPage${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
+									href="list${pageMaker.makeSearch(pageMaker.endPage+1)}">&raquo;</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -114,22 +115,23 @@
 
 
 <script>
-	var result = '${msg}';
-
-	if (result == 'SUCCESS') {
-		alert("처리가 완료되었습니다.");
-	}
-
-	$(".pagination li a").on("click", function(event) {
-		// event.preventDefault();
-
-		var targetPage = $(this).attr("href");
-		var jobForm = $("#jobForm");
-
-		jobForm.find("[name='page']").val(targetPage);
-		jobForm.attr("action", "/board/listPage").attr("method", "get");
-		jobForm.submit();
-	});
+	$(document).ready(
+			function() {
+				$('#searchBtn').on(
+						"click",
+						function(event) {
+							self.location = "list"
+									+ '${pageMaker.makeQuery(1)}'
+									+ "&searchType="
+									+ $("select option:selected").val()
+									+ "&keyword="
+									+ encodeURIComponent($('#keywordInput')
+											.val());
+						});
+				$('#newBtn').on("click", function(evt) {
+					self.location = "register";
+				});
+			});
 </script>
 
 <%@include file="../include/footer.jsp"%>
