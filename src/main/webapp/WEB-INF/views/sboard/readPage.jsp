@@ -82,9 +82,8 @@
 			<!-- The time line -->
 			<ul class="timeline">
 				<!-- timeline time label -->
-				<li class="time-label" id="repliesDiv">
-				<span class="bg-green" style="cursor: pointer"> Replies List </span>
-				</li>
+				<li class="time-label" id="repliesDiv"><span class="bg-green"
+					style="cursor: pointer"> Replies List </span></li>
 			</ul>
 
 			<div class='text-center'>
@@ -158,7 +157,7 @@
 		target.after(html);
 	}
 
-	var bno = ${boardVO.bno};
+	var bno = (${boardVO.bno});
 	var replyPage = 1;
 
 	function getPage(pageInfo) {
