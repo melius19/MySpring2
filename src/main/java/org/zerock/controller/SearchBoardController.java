@@ -50,6 +50,7 @@ public class SearchBoardController {
 	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
 	public String remove(@RequestParam("bno") int bno, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
 
+		System.out.println("here!!!");
 		service.remove(bno);
 
 		rttr.addAttribute("page", cri.getPage());
